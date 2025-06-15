@@ -2,97 +2,174 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Sitio Personal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Portafolio Profesional</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-    nav { background: #333; padding: 1em; text-align: center; }
-    nav a { color: white; margin: 0 1em; text-decoration: none; font-weight: bold; }
-    section { padding: 2em; display: none; }
-    section.active { display: block; }
-    .cv { display: flex; align-items: flex-start; }
-    .cv img { max-width: 200px; margin-right: 2em; border-radius: 10px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1em; }
-    .box { background: white; padding: 1em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .circle-list span { display: inline-block; background: #ddd; border-radius: 50%; width: 40px; height: 40px; text-align: center; line-height: 40px; margin: 5px; font-weight: bold; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #1c2331;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    nav button:hover {
+      color: #00bcd4;
+    }
+
+    .seccion {
+      display: none;
+      padding: 40px;
+    }
+
+    .activo {
+      display: block;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #edd101;
+      color: white;
+      padding: 30px 40px;
+    }
+
+    .foto-perfil {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgb(229, 245, 9);
+    }
+
+    .descarga {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #00bcd4;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .descarga:hover {
+      background-color: #0193a2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1c2331;
+      color: white;
+      margin-top: 40px;
+    }
+
+    .proyecto {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 5px solid #00bcd4;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #00bcd4;
+    }
   </style>
 </head>
 <body>
 
+  <header>
+    <div>
+      <h1>Dara Eulalia Tito Olivares</h1>
+      <p>Desarrolladora Web | Ingeniera en Informática</p>
+      <a class="descarga" href="assets/Dara Eulalia Tito Olivares.pdf" download>Descargar CV</a>
+    </div>
+    <img class="foto-perfil" src="assets/BeautyPlus_20200911101505160_save.jpg" alt="Tu foto">
+  </header>
+
   <nav>
-    <a href="#" onclick="showSection('cv')">CV</a>
-    <a href="#" onclick="showSection('descripcion')">Contacto</a>
-    <a href="#" onclick="showSection('sobremi')">Sobre Mí</a>
-    <a href="#" onclick="showSection('proyectos')">Proyectos</a>
-    <a href="#" onclick="showSection('contactos')">Contactos</a>
+    <button onclick="mostrarSeccion('inicio')">Inicio</button>
+    <button onclick="mostrarSeccion('sobremi')">Sobre mí</button>
+    <button onclick="mostrarSeccion('proyectos')">Proyectos</button>
+    <button onclick="mostrarSeccion('contacto')">Contacto</button>
   </nav>
 
-  <section id="cv" class="active">
-    <div class="cv">
-      <img src="assets/BeautyPlus_20200911101505160_save.jpg" alt="Mi Foto">
-      <div>
-        <h2>Mi Currículum</h2>
-        <p>Estudiante de arquitectura de plataformas y servicios de TIC con sólida formación en diseño, desarrollo e implementación de sistemas tecnológicos robustos y escalables, dominio de metodologías ágiles y capacidad para trabajar en equipo, adaptándose a entornos dinámicos y desafiantes.  Buscando oportunidades para aplicar mis conocimientos y contribuir al crecimiento de una organización tecnológica..</p>
-      </div>
-    </div>
+  <section id="inicio" class="seccion activo">
+    <h2>Bienvenido a mi portafolio</h2>
+    <p>Explora mi trayectoria profesional, proyectos y formas de contacto. ¡Gracias por visitar!</p>
   </section>
 
-  <section id="descripcion">
-    <h2>Contacto</h2>
-    <p>Puedes contactarme a través de los siguientes medios.
-      -Numero: 948757470
-      -Correo: DaraEulalia31@gmail.com
+  <section id="sobremi" class="seccion">
+    <h2>Sobre mí</h2>
+    <p>
+      Soy un/a apasionado/a de la informática con experiencia en desarrollo web, diseño de interfaces y soluciones eficientes. Me gusta mantenerme actualizado/a y siempre buscar formas nuevas de innovar con tecnología.
     </p>
   </section>
 
-  <section id="sobremi">
-    <h2>Sobre Mi</h2>
-    <div class="grid">
-      <div class="box">En computación, aprendo en la resolución de problemas y el pensamiento algorítmico,  traduciendo desafíos complejos en soluciones lógicas y eficientes</div>
-      <div class="box">Mi habilidad como repostera es la precisión en la medición y el seguimiento de recetas.  La repostería requiere exactitud en las cantidades de ingredientes y un seguimiento cuidadoso de los procesos para lograr la textura y el sabor deseados</div>
-      <div class="box">Mis habilidades culinarias demuestran mi adaptabilidad, creatividad e improvisación, permitiéndome crear y modificar recetas según las circunstancias.</div>
-    </div>
-  </section>
-
-  <section id="proyectos">
+  <section id="proyectos" class="seccion">
     <h2>Proyectos</h2>
-    <div class="grid">
-      <div class="box">https://github.com/daraeulalia31/clasecss</div>
-      <div class="box">https://github.com/daraeulalia31/Dulces-Sue-os</div>
-      <div class="box">https://github.com/daraeulalia31/Mi_primer_app</div>
+    <div class="proyecto">
+      <h3>Proyecto 1</h3>
+      <p>Descripción del proyecto, tecnologías usadas, y tu participación.</p>
+    </div>
+    <div class="proyecto">
+      <h3>Proyecto 2</h3>
+      <p>Otro proyecto que muestre tus habilidades técnicas.</p>
     </div>
   </section>
 
-  <section id="contactos">
-    <h2>Información de Contacto</h2>
-    <div class="grid">
-      <div class="box">Nombre: Dara Eulalia Tito Olivares</div>
-      <div class="box">Celular: +51 948757470</div>
-      <div class="box">Whatssap: 948757470</div>
-      <div class="box">TikTok: @daraeulaliatitool</div>
-      <div class="box">Instagram: daraeulaliatitoolivares</div>
-      <ul>
-  <div style="display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap;">
-  <a href="https://github.com/daraeulalia31" target="_blank">
-    <img src="assets/service_512.png" alt="" style="width: 100px; height: auto;">
-  </a>
-  <a href="https://www.tiktok.com/@daraeulaliatitool" target="_blank">
-    <img src="assets/TikTok-logo.jpg" alt="" style="width: 100px; height: auto;">
-  </a>
-  <a href="https://www.facebook.com/daraeulalia.titoolivares" target="_blank">
-    <img src="assets/images.png" alt="" style="width: 100px; height: auto;">
-  </a>
-</div>
-</a>
-</ul>
-    </div>
-   
+  <section id="contacto" class="seccion">
+    <h2>Contacto</h2>
+    <ul>
+      <li>Email: <strong>tucorreo@example.com</strong></li>
+      <li>LinkedIn: <a href="#">linkedin.com/in/tuusuario</a></li>
+      <li>GitHub: <a href="#">github.com/tuusuario</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; Dara Eulalia Tito Olivares. Todos los derechos reservados.
+  </footer>
 
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function mostrarSeccion(id) {
+      const secciones = document.querySelectorAll('.seccion');
+      secciones.forEach(sec => sec.classList.remove('activo'));
+      document.getElementById(id).classList.add('activo');
     }
   </script>
+
 </body>
 </html>
+
+
