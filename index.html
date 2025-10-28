@@ -2,174 +2,278 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mi Portafolio Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dulce Hogar - Taller de Repostería</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f9;
-      color: #333;
-    }
-
-    nav {
-      background-color: #1c2331;
-      padding: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav button {
-      background: none;
-      border: none;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    nav button:hover {
-      color: #00bcd4;
-    }
-
-    .seccion {
-      display: none;
-      padding: 40px;
-    }
-
-    .activo {
-      display: block;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(120deg, #ffe6f0, #fff0f5);
+      color: #4d2c2c;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255,192,203,0.95);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #edd101;
-      color: white;
-      padding: 30px 40px;
-    }
-
-    .foto-perfil {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid rgb(229, 245, 9);
-    }
-
-    .descarga {
-      display: inline-block;
-      margin-top: 20px;
       padding: 10px 20px;
-      background-color: #00bcd4;
-      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    header nav a {
       text-decoration: none;
-      border-radius: 5px;
+      background-color: #fff;
+      margin: 0 5px;
+      padding: 10px 15px;
+      border-radius: 12px;
       font-weight: bold;
+      color: #4d2c2c;
+      transition: all 0.3s;
     }
 
-    .descarga:hover {
-      background-color: #0193a2;
+    header nav a:hover {
+      background-color: #ffe4e1;
+      transform: translateY(-3px);
     }
 
-    footer {
+    header img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      object-fit: cover;
+    }
+
+    main {
+      margin-top: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      padding: 20px;
+    }
+
+    section {
+      background: rgba(255, 250, 240, 0.8);
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all 0.8s ease-out;
+    }
+
+    section.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    h2 {
       text-align: center;
-      padding: 20px;
-      background-color: #1c2331;
+      color: #ff69b4;
+      font-family: 'Pacifico', cursive;
+      margin-bottom: 25px;
+      font-size: 2rem;
+    }
+
+    .postres-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+
+    @media(min-width: 600px) { .postres-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width: 900px) { .postres-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .postre-card {
+      background: #fff0f5;
+      border: 2px solid #ffb6c1;
+      border-radius: 20px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.5s, box-shadow 0.5s;
+      cursor: pointer;
+    }
+
+    .postre-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+
+    .postre-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 2px solid #ffb6c1;
+    }
+
+    .postre-card h3 {
+      margin: 12px 0;
+      color: #ff1493;
+    }
+
+    .detalle {
+      margin-top: 10px;
+      background-color: #ffe4e1;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+      font-size: 0.95rem;
+    }
+
+    .nosotros-img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    form input, form textarea {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ffb6c1;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    form input:focus, form textarea:focus {
+      border-color: #ff69b4;
+      outline: none;
+    }
+
+    form button {
+      background-color: #ff69b4;
       color: white;
-      margin-top: 40px;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
-    .proyecto {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-left: 5px solid #00bcd4;
+    form button:hover { background-color: #ff1493; }
+
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
     }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    ul li {
-      margin-bottom: 10px;
-    }
-
-    a {
-      color: #00bcd4;
+    /* Responsive ajustes */
+    @media(max-width:500px){
+      header nav a { padding: 8px 10px; font-size: 0.9rem; margin:0 3px;}
+      header img { height:40px; width:40px; }
+      h2 { font-size:1.5rem; }
+      .postre-card img { height:150px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div>
-      <h1>Dara Eulalia Tito Olivares</h1>
-      <p>Desarrolladora Web | Ingeniera en Informática</p>
-      <a class="descarga" href="assets/Dara Eulalia Tito Olivares.pdf" download>Descargar CV</a>
-    </div>
-    <img class="foto-perfil" src="assets/BeautyPlus_20200911101505160_save.jpg" alt="Tu foto">
-  </header>
-
+<header>
   <nav>
-    <button onclick="mostrarSeccion('inicio')">Inicio</button>
-    <button onclick="mostrarSeccion('sobremi')">Sobre mí</button>
-    <button onclick="mostrarSeccion('proyectos')">Proyectos</button>
-    <button onclick="mostrarSeccion('contacto')">Contacto</button>
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#contacto">Contacto</a>
   </nav>
+  <img src="https://images.unsplash.com/photo-1590080878185-5c7ebff30fa6?auto=format&fit=crop&w=400&q=80" alt="Foto de la dueña">
+</header>
 
-  <section id="inicio" class="seccion activo">
-    <h2>Bienvenido a mi portafolio</h2>
-    <p>Explora mi trayectoria profesional, proyectos y formas de contacto. ¡Gracias por visitar!</p>
+<main>
+  <section id="inicio" class="parallax" style="background-image: url('https://images.unsplash.com/photo-1599785209707-3c5c3316c7b1?auto=format&fit=crop&w=1950&q=80');">
+    <h2>Bienvenido a Dulce Hogar</h2>
+    <p style="text-align:center; font-size:1.1rem; max-width:700px; margin:auto;">Endulza tus momentos con nuestros postres artesanales. Cada creación está hecha con amor y dedicación, pensada para sorprender tu paladar.</p>
   </section>
 
-  <section id="sobremi" class="seccion">
-    <h2>Sobre mí</h2>
-    <p>
-      Soy una señorita con conocimientos de la informática con experiencia en desarrollo web, diseño de interfaces y soluciones eficientes. Me gusta mantenerme actualizada y siempre buscar formas nuevas de innovar con tecnología.
-    </p>
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <p>En Dulce Hogar combinamos recetas tradicionales y modernas para ofrecer postres únicos que llenen de alegría cada celebración.</p>
+    <img class="nosotros-img" src="https://images.unsplash.com/photo-1589712227085-b26b8177ec54?auto=format&fit=crop&w=800&q=80" alt="Taller de repostería">
   </section>
 
-  <section id="proyectos" class="seccion">
-    <h2>Proyectos</h2>
-    <div class="proyecto">
-      <h3>Mi App</h3>
-      <p>Creacion de una app de reposteria para una empresa.</p>
-    </div>
-    <div class="proyecto">
-      <h3>Dulces Sueños</h3>
-      <p>Producto creado por mi para una pasteleria muy importante.</p>
-    </div>
+  <section id="catalogo">
+    <h2>Catálogo de Postres</h2>
+    <div class="postres-grid" id="postresGrid"></div>
   </section>
 
-  <section id="contacto" class="seccion">
+  <section id="contacto">
     <h2>Contacto</h2>
-    <ul>
-      <li>Email: <strong>DaraEulalia31@gmail.com</strong></li>
-      <li>Facebook: <a href="https://www.facebook.com/">Dara Eulalia</a></li>
-      <li>GitHub: <a href="https://github.com/daraeulalia31">Dara Eulalia</a></li>
-    </ul>
+    <p style="text-align:center;">Envíanos tus dudas o pedidos especiales. ¡Nos encantará atenderte!</p>
+    <form onsubmit="enviarFormulario(event)">
+      <input type="text" placeholder="Tu nombre" id="nombre" required>
+      <input type="email" placeholder="Tu correo electrónico" id="email" required>
+      <textarea placeholder="Mensaje" id="mensaje" rows="5" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="respuesta" style="text-align:center; margin-top:10px;"></p>
   </section>
+</main>
 
-  <footer>
-    &copy; Dara Eulalia Tito Olivares. Todos los derechos reservados.
-  </footer>
+<script>
+  const postres = [
+    {nombre:"Tarta de Chocolate", imagen:"https://images.unsplash.com/photo-1604917877937-5f44a2f76b8f?auto=format&fit=crop&w=800&q=80", descripcion:"Deliciosa tarta con chocolate puro y cobertura cremosa."},
+    {nombre:"Cupcakes de Fresa", imagen:"https://images.unsplash.com/photo-1589308078057-49ed3efea279?auto=format&fit=crop&w=800&q=80", descripcion:"Mini cupcakes con relleno de fresa fresca y frosting suave."},
+    {nombre:"Cheesecake de Frutos Rojos", imagen:"https://images.unsplash.com/photo-1551024709-8f23befc6c42?auto=format&fit=crop&w=800&q=80", descripcion:"Cheesecake cremoso con topping de frutos rojos naturales."},
+    {nombre:"Brownies de Chocolate", imagen:"https://images.unsplash.com/photo-1604908177525-39b4c0dc1c96?auto=format&fit=crop&w=800&q=80", descripcion:"Brownies húmedos y esponjosos con trozos de chocolate."},
+    {nombre:"Macarons de Vainilla", imagen:"https://images.unsplash.com/photo-1617196039972-6783b4b5ecfa?auto=format&fit=crop&w=800&q=80", descripcion:"Delicados macarons con sabor a vainilla y crema suave."},
+    {nombre:"Galletas Decoradas", imagen:"https://images.unsplash.com/photo-1603022767197-1a987a1f9d2f?auto=format&fit=crop&w=800&q=80", descripcion:"Galletas artesanales decoradas con glaseado y colorantes naturales."},
+    {nombre:"Tiramisú Tradicional", imagen:"https://images.unsplash.com/photo-1603052875154-b98a09331bfa?auto=format&fit=crop&w=800&q=80", descripcion:"Clásico tiramisú italiano con café y mascarpone."}
+  ];
 
-  <script>
-    function mostrarSeccion(id) {
-      const secciones = document.querySelectorAll('.seccion');
-      secciones.forEach(sec => sec.classList.remove('activo'));
-      document.getElementById(id).classList.add('activo');
-    }
-  </script>
+  const postresGrid = document.getElementById("postresGrid");
+  postres.forEach(postre=>{
+    const card = document.createElement("div");
+    card.className = "postre-card";
+    card.innerHTML = `
+      <img src="${postre.imagen}" alt="${postre.nombre}">
+      <h3>${postre.nombre}</h3>
+      <div class="detalle">${postre.descripcion}</div>
+    `;
+    card.addEventListener("click", () => {
+      const detalle = card.querySelector(".detalle");
+      detalle.style.display = detalle.style.display === "block" ? "none" : "block";
+    });
+    postresGrid.appendChild(card);
+  });
+
+  function enviarFormulario(event){
+    event.preventDefault();
+    const nombre = document.getElementById("nombre").value;
+    document.getElementById("respuesta").textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado.`;
+    document.getElementById("nombre").value="";
+    document.getElementById("email").value="";
+    document.getElementById("mensaje").value="";
+  }
+
+  // Animación al hacer scroll
+  const sections = document.querySelectorAll("section");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+      }
+    });
+  }, {threshold: 0.3});
+  sections.forEach(section => observer.observe(section));
+</script>
 
 </body>
 </html>
-
-
