@@ -1,279 +1,340 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dulce Hogar - Taller de Repostería</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portafolio — Dara Tito</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(120deg, #ffe6f0, #fff0f5);
-      color: #4d2c2c;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
+    :root{
+      --bg:#FFF7FB;
+      --accent-1:#FF7AA2;
+      --accent-2:#C77DFF;
+      --accent-3:#FFB4D9;
+      --text:#2b2b2b;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      position:relative;
+      scroll-behavior:smooth;
     }
 
-    header {
+    /* --- Fondo dinámico --- */
+    .bg-layer{pointer-events:none;position:fixed;inset:0;z-index:0;overflow:hidden;}
+    .blob{position:absolute;width:45vmax;height:45vmax;border-radius:50%;filter:blur(80px);opacity:0.55;transition:transform 1s cubic-bezier(.22,1,.36,1);}
+    .blob.a{background:linear-gradient(135deg,var(--accent-1),var(--accent-3));left:-15vmax;top:-15vmax}
+    .blob.b{background:linear-gradient(135deg,var(--accent-2),var(--accent-3));right:-20vmax;top:0}
+    .blob.c{background:linear-gradient(135deg,var(--accent-3),#FFDDE8);left:10vmax;bottom:-15vmax}
+
+    /* --- Fondo de brillitos --- */
+    canvas#sparkle {
       position: fixed;
-      top: 0;
+      inset: 0;
       width: 100%;
-      background: rgba(255,192,203,0.95);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      z-index: 1000;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    header nav a {
-      text-decoration: none;
-      background-color: #fff;
-      margin: 0 5px;
-      padding: 10px 15px;
-      border-radius: 12px;
-      font-weight: bold;
-      color: #4d2c2c;
-      transition: all 0.3s;
+    /* --- Header (barra fija superior) --- */
+    header{
+      position:fixed;
+      top:0;left:0;width:100%;
+      z-index:100;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+      border-bottom:1px solid rgba(0,0,0,0.05);
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    }
+    nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    .nav-buttons{display:flex;gap:8px;align-items:center}
+    .nav-buttons a{padding:8px 12px;border-radius:999px;text-decoration:none;font-weight:600;color:var(--text);transition:all .3s ease}
+    .nav-buttons a:hover{background:rgba(0,0,0,0.05)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white}
+    .btn-primary:hover{opacity:.9;transform:scale(1.05)}
+
+    /* --- Main --- */
+    main{max-width:1100px;margin:120px auto 40px;padding:24px;position:relative;z-index:10;}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:center;min-height:70vh}
+    .hero-left{padding:24px}
+    h1{font-size:2.3rem;margin-bottom:8px;line-height:1.3}
+    p.lead{margin:0 0 18px;color:#555;line-height:1.6;font-size:1.05rem}
+
+    /* --- Foto --- */
+    .photo-wrap{position:relative;align-self:start}
+    .photo{width:280px;height:360px;border-radius:22px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.15);border:6px solid rgba(255,255,255,0.6);
+      background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.3));
+      transform:translate3d(0,0,0);transition:transform .15s ease-out, box-shadow .3s ease;}
+    .photo:hover{box-shadow:0 25px 50px rgba(0,0,0,0.25);transform:translate3d(0,-4px,0) scale(1.02)}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+    .photo:hover img{transform:scale(1.05)}
+
+    /* --- Cards --- */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+    .card{padding:20px;border-radius:16px;background:var(--glass);box-shadow:0 6px 22px rgba(0,0,0,0.06);backdrop-filter:blur(10px);transition:transform .2s ease,box-shadow .3s ease;}
+    .card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+    .card h3{margin-bottom:8px;font-size:1.1rem;color:#333}
+
+    section{margin-top:60px;}
+    h2{font-size:1.8rem;margin-bottom:10px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;color:transparent;}
+    section p{color:#555;line-height:1.6}
+
+    footer{max-width:1100px;margin:60px auto 20px;padding:24px;color:#666;text-align:center;font-size:.9rem;}
+
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+    .chip{background:rgba(255,255,255,0.8);padding:8px 10px;border-radius:999px;font-weight:600;transition:all .3s ease;}
+    .chip:hover{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;transform:scale(1.05)}
+
+    /* --- Formulario de contacto --- */
+    form{
+      margin-top:20px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      max-width:480px;
+      margin-inline:auto;
+      background:rgba(255,255,255,0.7);
+      padding:22px;
+      border-radius:16px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      backdrop-filter:blur(12px);
+    }
+    input, textarea{
+      padding:10px 14px;
+      border-radius:8px;
+      border:1px solid #ddd;
+      font-family:'Poppins',sans-serif;
+      resize:none;
+      background-color:rgba(255,255,255,0.9);
+    }
+    button{
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color:white;
+      border:none;
+      padding:12px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    button:hover{opacity:0.9;transform:scale(1.03);}
+    #formMessage{
+      margin-top:10px;
+      font-weight:500;
+      color:#444;
+      display:none;
+      text-align:center;
     }
 
-    header nav a:hover {
-      background-color: #ffe4e1;
-      transform: translateY(-3px);
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .photo{width:220px;height:280px;margin:0 auto}
+      .cards{grid-template-columns:repeat(2,1fr)}
     }
-
-    header img {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      object-fit: cover;
-    }
-
-    main {
-      margin-top: 90px;
-      display: flex;
-      flex-direction: column;
-      gap: 60px;
-      padding: 20px;
-    }
-
-    section {
-      background: rgba(255, 250, 240, 0.8);
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      transform: translateY(50px);
-      opacity: 0;
-      transition: all 0.8s ease-out;
-    }
-
-    section.visible {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    h2 {
-      text-align: center;
-      color: #ff69b4;
-      font-family: 'Pacifico', cursive;
-      margin-bottom: 25px;
-      font-size: 2rem;
-    }
-
-    .postres-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 25px;
-    }
-
-    @media(min-width: 600px) { .postres-grid { grid-template-columns: 1fr 1fr; } }
-    @media(min-width: 900px) { .postres-grid { grid-template-columns: 1fr 1fr 1fr; } }
-
-    .postre-card {
-      background: #fff0f5;
-      border: 2px solid #ffb6c1;
-      border-radius: 20px;
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.5s, box-shadow 0.5s;
-      cursor: pointer;
-    }
-
-    .postre-card:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-    }
-
-    .postre-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-bottom: 2px solid #ffb6c1;
-    }
-
-    .postre-card h3 {
-      margin: 12px 0;
-      color: #ff1493;
-    }
-
-    .detalle {
-      margin-top: 10px;
-      background-color: #ffe4e1;
-      padding: 10px;
-      border-radius: 10px;
-      display: none;
-      font-size: 0.95rem;
-    }
-
-    .nosotros-img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    form input, form textarea {
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #ffb6c1;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-
-    form input:focus, form textarea:focus {
-      border-color: #ff69b4;
-      outline: none;
-    }
-
-    form button {
-      background-color: #ff69b4;
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    form button:hover { background-color: #ff1493; }
-
-    .parallax {
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* Responsive ajustes */
-    @media(max-width:500px){
-      header nav a { padding: 8px 10px; font-size: 0.9rem; margin:0 3px;}
-      header img { height:40px; width:40px; }
-      h2 { font-size:1.5rem; }
-      .postre-card img { height:150px; }
+    @media(max-width:560px){
+      .cards{grid-template-columns:1fr}
+      .photo{width:180px;height:230px}
+      h1{font-size:1.7rem}
     }
   </style>
 </head>
 <body>
 
-<header>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#catalogo">Catálogo</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-  <img src="https://images.unsplash.com/photo-1590080878185-5c7ebff30fa6?auto=format&fit=crop&w=400&q=80" alt="Foto de la dueña">
-</header>
+  <div class="bg-layer" aria-hidden="true">
+    <div class="blob a" id="blobA"></div>
+    <div class="blob b" id="blobB"></div>
+    <div class="blob c" id="blobC"></div>
+  </div>
+  <canvas id="sparkle"></canvas>
 
-<main>
-  <section id="inicio" class="parallax" style="background-image: url('https://images.unsplash.com/photo-1599785209707-3c5c3316c7b1?auto=format&fit=crop&w=1950&q=80');">
-    <h2>Bienvenido a Dulce Hogar</h2>
-    <p style="text-align:center; font-size:1.1rem; max-width:700px; margin:auto;">Endulza tus momentos con nuestros postres artesanales. Cada creación está hecha con amor y dedicación, pensada para sorprender tu paladar.</p>
-  </section>
+  <header>
+    <nav>
+      <div class="brand">
+        <div class="logo">DT</div>
+        <div>
+          <div style="font-weight:700">Dara Tito</div>
+          <div style="font-size:12px;color:#666">Estudiante & Aprendiz</div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <a href="#about">Sobre mí</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#skills">Habilidades</a>
+        <a class="btn-primary" href="#contact">Contacto</a>
+      </div>
+    </nav>
+  </header>
 
-  <section id="nosotros">
-    <h2>Nosotros</h2>
-    <p>En Dulce Hogar combinamos recetas tradicionales y modernas para ofrecer postres únicos que llenen de alegría cada celebración.</p>
-    <img class="nosotros-img" src="https://images.unsplash.com/photo-1589712227085-b26b8177ec54?auto=format&fit=crop&w=800&q=80" alt="Taller de repostería">
-  </section>
+  <main>
+    <section class="hero" aria-label="Introducción">
+      <div class="hero-left">
+        <h1>Hola, soy <span style="background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;color:transparent">Dara</span></h1>
+        <p class="lead">Soy una Estudiante de Arquitectura de Plataformas y vengo aprendiendo poco a poco, me gusta aprender y esforzarme para mejorar día a día.</p>
 
-  <section id="catalogo">
-    <h2>Catálogo de Postres</h2>
-    <div class="postres-grid" id="postresGrid"></div>
-  </section>
+        <div class="cards">
+          <div class="card">
+            <h3>Proyectos recientes</h3>
+            <p>Portafolio, Sitios web.</p>
+          </div>
+          <div class="card">
+            <h3>Servicios</h3>
+            <p>Diseño web, desarrollo frontend, Páginas Web.</p>
+          </div>
+          <div class="card">
+            <h3>Contacto rápido</h3>
+            <div class="chips">
+              <span class="chip">✉️ Email</span>
+              <span class="chip">🔗 LinkedIn</span>
+              <span class="chip">💬 WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <p style="text-align:center;">Envíanos tus dudas o pedidos especiales. ¡Nos encantará atenderte!</p>
-    <form onsubmit="enviarFormulario(event)">
-      <input type="text" placeholder="Tu nombre" id="nombre" required>
-      <input type="email" placeholder="Tu correo electrónico" id="email" required>
-      <textarea placeholder="Mensaje" id="mensaje" rows="5" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-    <p id="respuesta" style="text-align:center; margin-top:10px;"></p>
-  </section>
-</main>
+      <aside class="photo-wrap">
+        <div class="photo" id="profilePhoto">
+          <img src="assets/BeautyPlus_20200911101505160_save.jpg" alt="Foto de perfil">
+        </div>
+      </aside>
+    </section>
 
-<script>
-  const postres = [
-    {nombre:"Tarta de Chocolate", imagen:"https://images.unsplash.com/photo-1604917877937-5f44a2f76b8f?auto=format&fit=crop&w=800&q=80", descripcion:"Deliciosa tarta con chocolate puro y cobertura cremosa."},
-    {nombre:"Cupcakes de Fresa", imagen:"https://images.unsplash.com/photo-1589308078057-49ed3efea279?auto=format&fit=crop&w=800&q=80", descripcion:"Mini cupcakes con relleno de fresa fresca y frosting suave."},
-    {nombre:"Cheesecake de Frutos Rojos", imagen:"https://images.unsplash.com/photo-1551024709-8f23befc6c42?auto=format&fit=crop&w=800&q=80", descripcion:"Cheesecake cremoso con topping de frutos rojos naturales."},
-    {nombre:"Brownies de Chocolate", imagen:"https://images.unsplash.com/photo-1604908177525-39b4c0dc1c96?auto=format&fit=crop&w=800&q=80", descripcion:"Brownies húmedos y esponjosos con trozos de chocolate."},
-    {nombre:"Macarons de Vainilla", imagen:"https://images.unsplash.com/photo-1617196039972-6783b4b5ecfa?auto=format&fit=crop&w=800&q=80", descripcion:"Delicados macarons con sabor a vainilla y crema suave."},
-    {nombre:"Galletas Decoradas", imagen:"https://images.unsplash.com/photo-1603022767197-1a987a1f9d2f?auto=format&fit=crop&w=800&q=80", descripcion:"Galletas artesanales decoradas con glaseado y colorantes naturales."},
-    {nombre:"Tiramisú Tradicional", imagen:"https://images.unsplash.com/photo-1603052875154-b98a09331bfa?auto=format&fit=crop&w=800&q=80", descripcion:"Clásico tiramisú italiano con café y mascarpone."}
-  ];
+    <section id="about">
+      <h2>Sobre mí</h2>
+      <p>Soy una apasionada de la creación de postres y la tecnología. Me encanta transformar ideas en productos digitales con impacto. He trabajado en proyectos de desarrollo web y diseño de páginas web. Mi objetivo es seguir aprendiendo y crear experiencias únicas.</p>
+    </section>
 
-  const postresGrid = document.getElementById("postresGrid");
-  postres.forEach(postre=>{
-    const card = document.createElement("div");
-    card.className = "postre-card";
-    card.innerHTML = `
-      <img src="${postre.imagen}" alt="${postre.nombre}">
-      <h3>${postre.nombre}</h3>
-      <div class="detalle">${postre.descripcion}</div>
-    `;
-    card.addEventListener("click", () => {
-      const detalle = card.querySelector(".detalle");
-      detalle.style.display = detalle.style.display === "block" ? "none" : "block";
-    });
-    postresGrid.appendChild(card);
-  });
+    <section id="projects">
+      <h2>Proyectos</h2>
+      <p>Aquí podrás ver una selección de mis trabajos más destacados, con un enfoque en diseño, interacción y accesibilidad.</p>
+      <div class="cards" style="margin-top:20px;">
+        <div class="card">
+          <h3>🌐 Sitio de Repostería</h3>
+          <p>Diseño y desarrollo completo de una web responsiva con HTML, CSS y JavaScript.</p>
+        </div>
+        <div class="card">
+          <h3>💻 Portafolio Personal</h3>
+          <p>Interfaz moderna y dinámica con fondo animado e interacciones suaves.</p>
+        </div>
+        <div class="card">
+          <h3>📱 App de Notas</h3>
+          <p>Aplicación web para tomar notas rápidas, creada con React y LocalStorage.</p>
+        </div>
+      </div>
+    </section>
 
-  function enviarFormulario(event){
-    event.preventDefault();
-    const nombre = document.getElementById("nombre").value;
-    document.getElementById("respuesta").textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado.`;
-    document.getElementById("nombre").value="";
-    document.getElementById("email").value="";
-    document.getElementById("mensaje").value="";
-  }
+    <section id="skills">
+      <h2>Habilidades</h2>
+      <div class="chips" style="margin-top:10px;">
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Figma</span>
+        <span class="chip">Git</span>
+        <span class="chip">Diseño UI/UX</span>
+      </div>
+    </section>
 
-  // Animación al hacer scroll
-  const sections = document.querySelectorAll("section");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add("visible");
+    <section id="contact">
+      <h2>Contacto</h2>
+      <p>Si te gustaría colaborar o tienes una propuesta, no dudes en escribirme:</p>
+
+      <form id="contactForm">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <textarea name="mensaje" placeholder="Escribe tu mensaje..." rows="5" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+
+      <p id="formMessage">✅ Tu mensaje ha sido enviado (ficticiamente) con éxito.</p>
+
+      <p style="margin-top:30px;color:#666;text-align:center;">
+        <strong>Email:</strong> tu@email.com<br>
+        <strong>LinkedIn:</strong> linkedin.com/in/daratito
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> — Diseñado por Dara Tito
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Movimiento de blobs
+    const blobs = [
+      { el: document.getElementById('blobA'), factor: 0.03 },
+      { el: document.getElementById('blobB'), factor: 0.05 },
+      { el: document.getElementById('blobC'), factor: 0.02 }
+    ];
+    const profile = document.getElementById('profilePhoto');
+    let mouse = {x: 0, y: 0};
+    window.addEventListener('mousemove', e => { mouse.x=e.clientX; mouse.y=e.clientY; moveBackground(); });
+    function moveBackground(){
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const dx = mouse.x - centerX;
+      const dy = mouse.y - centerY;
+      blobs.forEach(b => {
+        const tx = -dx * b.factor;
+        const ty = -dy * b.factor;
+        b.el.style.transform = `translate(${tx}px, ${ty}px)`;
+      });
+      const px = dx * 0.015;
+      const py = dy * 0.015;
+      profile.style.transform = `translate(${px}px, ${py}px) rotate(${px*0.08}deg)`;
+    }
+
+    // Fondo con brillitos
+    const canvas = document.getElementById('sparkle');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w,h;
+    function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+    window.addEventListener('resize',resize);resize();
+
+    function createParticle(x,y){
+      particles.push({x,y,r:Math.random()*2+1,alpha:1,speedX:(Math.random()-.5)*1.5,speedY:(Math.random()-.5)*1.5});
+    }
+    window.addEventListener('mousemove',e=>{for(let i=0;i<3;i++)createParticle(e.clientX,e.clientY);});
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(let i=particles.length-1;i>=0;i--){
+        let p=particles[i];
+        p.x+=p.speedX;
+        p.y+=p.speedY;
+        p.alpha-=0.015;
+        if(p.alpha<=0){particles.splice(i,1);continue;}
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,182,193,${p.alpha})`;
+        ctx.fill();
       }
-    });
-  }, {threshold: 0.3});
-  sections.forEach(section => observer.observe(section));
-</script>
+      requestAnimationFrame(draw);
+    }
+    draw();
 
+    // Formulario fake
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+      formMessage.style.display = 'block';
+      formMessage.textContent = '✅ Tu mensaje ha sido enviado (ficticiamente) con éxito.';
+      contactForm.reset();
+      setTimeout(() => formMessage.style.display = 'none', 4000);
+    });
+  </script>
 </body>
 </html>
