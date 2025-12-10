@@ -25,14 +25,12 @@
       scroll-behavior:smooth;
     }
 
-    /* --- Fondo dinámico --- */
     .bg-layer{pointer-events:none;position:fixed;inset:0;z-index:0;overflow:hidden;}
     .blob{position:absolute;width:45vmax;height:45vmax;border-radius:50%;filter:blur(80px);opacity:0.55;transition:transform 1s cubic-bezier(.22,1,.36,1);}
     .blob.a{background:linear-gradient(135deg,var(--accent-1),var(--accent-3));left:-15vmax;top:-15vmax}
     .blob.b{background:linear-gradient(135deg,var(--accent-2),var(--accent-3));right:-20vmax;top:0}
     .blob.c{background:linear-gradient(135deg,var(--accent-3),#FFDDE8);left:10vmax;bottom:-15vmax}
 
-    /* --- Fondo de brillitos --- */
     canvas#sparkle {
       position: fixed;
       inset: 0;
@@ -42,7 +40,6 @@
       z-index: 1;
     }
 
-    /* --- Header (barra fija superior) --- */
     header{
       position:fixed;
       top:0;left:0;width:100%;
@@ -61,14 +58,12 @@
     .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white}
     .btn-primary:hover{opacity:.9;transform:scale(1.05)}
 
-    /* --- Main --- */
     main{max-width:1100px;margin:120px auto 40px;padding:24px;position:relative;z-index:10;}
     .hero{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:center;min-height:70vh}
     .hero-left{padding:24px}
     h1{font-size:2.3rem;margin-bottom:8px;line-height:1.3}
     p.lead{margin:0 0 18px;color:#555;line-height:1.6;font-size:1.05rem}
 
-    /* --- Foto --- */
     .photo-wrap{position:relative;align-self:start}
     .photo{width:280px;height:360px;border-radius:22px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.15);border:6px solid rgba(255,255,255,0.6);
       background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.3));
@@ -77,7 +72,6 @@
     .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
     .photo:hover img{transform:scale(1.05)}
 
-    /* --- Cards --- */
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
     .card{padding:20px;border-radius:16px;background:var(--glass);box-shadow:0 6px 22px rgba(0,0,0,0.06);backdrop-filter:blur(10px);transition:transform .2s ease,box-shadow .3s ease;}
     .card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
@@ -93,7 +87,6 @@
     .chip{background:rgba(255,255,255,0.8);padding:8px 10px;border-radius:999px;font-weight:600;transition:all .3s ease;}
     .chip:hover{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;transform:scale(1.05)}
 
-    /* --- Formulario de contacto --- */
     form{
       margin-top:20px;
       display:flex;
@@ -134,7 +127,6 @@
       text-align:center;
     }
 
-    /* Responsive */
     @media(max-width:980px){
       .hero{grid-template-columns:1fr;}
       .photo{width:220px;height:280px;margin:0 auto}
@@ -184,11 +176,25 @@
           <div class="card">
             <h3>Proyectos recientes</h3>
             <p>Portafolio, Sitios web.</p>
+
+            <a href="https://www.freecodecamp.org/certification/dara_eulalia/responsive-web-design"
+               target="_blank"
+               style="font-weight:600; color: var(--accent-1); text-decoration:none; display:block; margin-bottom:8px;">
+              Ver Certificación FreeCodeCamp
+            </a>
+
+            <a href="https://github.com/daraeulalia31"
+               target="_blank"
+               style="font-weight:600; color: var(--accent-1); text-decoration:none;">
+              Ver Perfil en GitHub
+            </a>
           </div>
+
           <div class="card">
             <h3>Servicios</h3>
             <p>Diseño web, desarrollo frontend, Páginas Web.</p>
           </div>
+
           <div class="card">
             <h3>Contacto rápido</h3>
             <div class="chips">
@@ -215,6 +221,7 @@
     <section id="projects">
       <h2>Proyectos</h2>
       <p>Aquí podrás ver una selección de mis trabajos más destacados, con un enfoque en diseño, interacción y accesibilidad.</p>
+
       <div class="cards" style="margin-top:20px;">
         <div class="card">
           <h3>🌐 Sitio de Repostería</h3>
@@ -271,7 +278,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Movimiento de blobs
     const blobs = [
       { el: document.getElementById('blobA'), factor: 0.03 },
       { el: document.getElementById('blobB'), factor: 0.05 },
@@ -295,7 +301,6 @@
       profile.style.transform = `translate(${px}px, ${py}px) rotate(${px*0.08}deg)`;
     }
 
-    // Fondo con brillitos
     const canvas = document.getElementById('sparkle');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -325,7 +330,6 @@
     }
     draw();
 
-    // Formulario fake
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
     contactForm.addEventListener('submit', e => {
